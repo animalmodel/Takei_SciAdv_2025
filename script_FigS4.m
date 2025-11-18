@@ -307,3 +307,36 @@ set(hAx,'TickDir','out','Box','off')
 axis(hAx,'square')
 xlabel(hAx,'Preference index'),ylabel(hAx,'Counts')
 title({'CM cell (MonE)',['t(',num2str(ttest_stats_s.df,'%.2f'),')=',num2str(ttest_stats_s.tstat,'%.2f'),', p=',num2str(ttest_p_s)]})
+
+
+function y = sem(x,w,dim)
+%SEM Standard error of mean.
+
+if nargin < 2 || isempty(w), w = 0; end
+if nargin < 3
+    % The output size for [] is a special case when DIM is not given.
+    if isequal(x,[]), y = NaN(class(x)); return; end
+    
+    % Figure out which dimension sum will work along.
+    dim = find(size(x) ~= 1, 1);
+    if isempty(dim), dim = 1; end
+end
+n = size(x,dim);
+y = std(x,w,dim)./sqrt(n);
+end
+
+function Z  =r2z(R)
+% fisher's z-transformation for correlation coefficient
+%
+% Reference:
+% http://en.wikipedia.org/wiki/Fisher_transformation
+%
+% see also z2r
+
+[R,nshift] = shiftdim(R);
+
+% Z   = log((1+R)./(1-R))/2;
+Z   = atanh(R);
+
+Z = shiftdim(Z,-nshift);
+end

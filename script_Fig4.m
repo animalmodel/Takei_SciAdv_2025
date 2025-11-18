@@ -88,4 +88,18 @@ axis(hAx,'square')
 xlabel(hAx,'Preference index'),ylabel(hAx,'Counts')
 title({'CM cell',['t(',num2str(ttest_stats.df,'%.2f'),')=',num2str(ttest_stats.tstat,'%.2f'),', p=',num2str(ttest_p)]})
 
+function Z  =r2z(R)
+% fisher's z-transformation for correlation coefficient
+%
+% Reference:
+% http://en.wikipedia.org/wiki/Fisher_transformation
+%
+% see also z2r
 
+[R,nshift] = shiftdim(R);
+
+% Z   = log((1+R)./(1-R))/2;
+Z   = atanh(R);
+
+Z = shiftdim(Z,-nshift);
+end

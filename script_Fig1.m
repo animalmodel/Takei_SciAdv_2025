@@ -84,3 +84,20 @@ end
 set(hAx,'TickDir','out','Box','off','XTick',1:2,'XTickLabel',{'PreM-IN','CM cell'})
 axis(hAx,'square')
 title({'MPI (%)',['t(',num2str(ttest_stats.df,'%.2f'),')=',num2str(ttest_stats.tstat,'%.2f'),', p=',num2str(ttest_p)]})
+
+
+function y = sem(x,w,dim)
+%SEM Standard error of mean.
+
+if nargin < 2 || isempty(w), w = 0; end
+if nargin < 3
+    % The output size for [] is a special case when DIM is not given.
+    if isequal(x,[]), y = NaN(class(x)); return; end
+    
+    % Figure out which dimension sum will work along.
+    dim = find(size(x) ~= 1, 1);
+    if isempty(dim), dim = 1; end
+end
+n = size(x,dim);
+y = std(x,w,dim)./sqrt(n);
+end

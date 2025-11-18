@@ -88,3 +88,20 @@ set(gca,'TickDir','out','Box','off','XTick',1:2,'XTickLabel',{'PreM-IN','CM cell
 axis(hAx,'square')
 title({'Lag (s)',['t(',num2str(ttest_stats.df,'%.2f'),')=',num2str(ttest_stats.tstat,'%.2f'),', p=',num2str(ttest_p)]})
 [vartest_h,vartest_p,vartest_ci,vartest_stats] = vartest2(data_sp,data_cx)
+
+
+function Z  =r2z(R)
+% fisher's z-transformation for correlation coefficient
+%
+% Reference:
+% http://en.wikipedia.org/wiki/Fisher_transformation
+%
+% see also z2r
+
+[R,nshift] = shiftdim(R);
+
+% Z   = log((1+R)./(1-R))/2;
+Z   = atanh(R);
+
+Z = shiftdim(Z,-nshift);
+end
