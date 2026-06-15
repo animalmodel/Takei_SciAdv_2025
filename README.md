@@ -2,7 +2,7 @@
 
 This repository contains the data and MATLAB code associated with the manuscript by **Takei et al.**,  
 titled **“Primate dexterous hand movements are controlled by functionally distinct premotoneuronal systems.”**  
-(Manuscript currently under review)
+(published in Science Advances)
 
 ## Contents
 - `/` : Analysis scripts and functions used for the figures.
